@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#f5f5f5">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deteksi Hama Daun Cabai"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#2E7D32"
+        android:gravity="center"
+        android:layout_marginBottom="20dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_aspect_ratio_24"
+            android:background="#ffffff" />
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btnUpload"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Upload Gambar Daun"
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/baseline_add_a_photo_24"
+        android:drawablePadding="8dp"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/btnDetect"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Deteksi Hama"
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="20dp"
+        android:drawableLeft="@drawable/baseline_add_a_photo_24"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:enabled="false" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Silakan upload gambar daun cabai untuk deteksi hama"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvConfidence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tips: Pastikan gambar daun cabai jelas dan memiliki pencahayaan yang cukup untuk hasil deteksi yang optimal."
+        android:textSize="12sp"
+        android:textColor="#757575"
+        android:textStyle="italic"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

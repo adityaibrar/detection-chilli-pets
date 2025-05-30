@@ -1,0 +1,54 @@
+package com.example.chilipestdetection.services;
+
+import com.example.chilipestdetection.models.HamaResponse;
+import com.example.chilipestdetection.models.LoginRequest;
+import com.example.chilipestdetection.models.LoginResponse;
+import com.example.chilipestdetection.models.RegisterRequest;
+import com.example.chilipestdetection.models.RegisterResponse;
+
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
+
+public interface ApiService {
+    @POST("exec")
+    @FormUrlEncoded
+    Call<LoginResponse> login(@FieldMap Map<String, String> fields);
+
+    @POST("exec")
+    @FormUrlEncoded
+    Call<RegisterResponse> register(@FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST("exec")
+    Call<HamaResponse> readHama(@Field("action") String action);
+
+    @FormUrlEncoded
+    @POST("exec")
+    Call<HamaResponse> createHama(
+            @Field("action") String action,
+            @Field("nama_hama") String namaHama,
+            @Field("type") String type
+    );
+
+    @FormUrlEncoded
+    @POST("exec")
+    Call<HamaResponse> updateHama(
+            @Field("action") String action,
+            @Field("kode_hama") String kodeHama,
+            @Field("nama_hama") String namaHama,
+            @Field("type") String type
+    );
+
+    @FormUrlEncoded
+    @POST("exec")
+    Call<HamaResponse> deleteHama(
+            @Field("action") String action,
+            @Field("kode_hama") String kodeHama
+    );
+}
