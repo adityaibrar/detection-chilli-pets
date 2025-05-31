@@ -1,6 +1,7 @@
 package com.example.chilipestdetection.contracts;
 
 import com.example.chilipestdetection.models.HamaRequest;
+import com.example.chilipestdetection.models.HamaResponse;
 
 import java.util.List;
 

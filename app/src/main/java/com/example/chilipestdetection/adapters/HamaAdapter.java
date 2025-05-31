@@ -13,12 +13,13 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chilipestdetection.R;
+import com.example.chilipestdetection.models.HamaRequest;
 import com.example.chilipestdetection.models.HamaResponse;
 
 import java.util.List;
 
 public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder> {
-    private List<HamaResponse> hamaList;
+    private List<HamaRequest> hamaList;
     private Context context;
     private OnHamaActionListener listener;
 
@@ -27,7 +28,7 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
         void onDeleteHama(String kodeHama);
     }
 
-    public HamaAdapter(Context context, List<HamaResponse> hamaList) {
+    public HamaAdapter(Context context, List<HamaRequest> hamaList) {
         this.context = context;
         this.hamaList = hamaList;
     }
@@ -45,7 +46,7 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull HamaViewHolder holder, int position) {
-        HamaResponse hama = hamaList.get(position);
+        HamaRequest hama = hamaList.get(position);
 
         holder.tvKodeHama.setText(hama.getKodeHama());
         holder.tvNamaHama.setText(hama.getNamaHama());
@@ -60,12 +61,19 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
         return hamaList != null ? hamaList.size() : 0;
     }
 
-    public void updateData(List<HamaResponse> newHamaList) {
-        this.hamaList = newHamaList;
-        notifyDataSetChanged();
+    public void updateData(List<HamaRequest> newHamaList) {
+        if (newHamaList != null) {
+            this.hamaList.clear();
+            this.hamaList.addAll(newHamaList);
+            notifyDataSetChanged();
+        } else {
+            // Jika data null, kosongkan list
+            this.hamaList.clear();
+            notifyDataSetChanged();
+        }
     }
 
-    private void showEditDialog(HamaResponse hama) {
+    private void showEditDialog(HamaRequest hama) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_edit_hama, null);
 
@@ -97,7 +105,7 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
         dialog.show();
     }
 
-    private void showDeleteDialog(HamaResponse hama) {
+    private void showDeleteDialog(HamaRequest hama) {
         new AlertDialog.Builder(context)
                 .setTitle("Hapus Hama")
                 .setMessage("Apakah Anda yakin ingin menghapus hama " + hama.getNamaHama() + "?")
