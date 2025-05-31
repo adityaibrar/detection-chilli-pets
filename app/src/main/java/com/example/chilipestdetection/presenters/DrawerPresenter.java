@@ -46,12 +46,12 @@ public class DrawerPresenter implements DrawerContract.Presenter {
     }
 
     @Override
-    public void onAddHamaClicked() {
-        drawerView.navigateToAddHama();
+    public void onAnalisisClicked() {
+        drawerView.navigateToAnalisis();
     }
 
     @Override
-    public void onAddSolusiClicked() {
-        drawerView.navigateToAddSolusi();
+    public void onPenangananClicked() {
+        drawerView.navigateToPenanganan();
     }
 }

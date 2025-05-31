@@ -6,13 +6,12 @@ import com.example.chilipestdetection.contracts.HamaView;
 import com.example.chilipestdetection.models.HamaResponse;
 import com.example.chilipestdetection.services.ApiClient;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HamaPresenter {
+
     private HamaView view;
 
     public HamaPresenter(HamaView view) {
@@ -35,6 +34,7 @@ public class HamaPresenter {
                         HamaResponse HamaResponse = response.body();
                         if (HamaResponse.isSuccess()) {
                             view.showHamaList(HamaResponse.getData());
+
                         } else {
                             view.showError("Gagal memuat data hama");
                         }

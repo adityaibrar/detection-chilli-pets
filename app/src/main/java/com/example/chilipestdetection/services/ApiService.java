@@ -3,6 +3,7 @@ package com.example.chilipestdetection.services;
 import com.example.chilipestdetection.models.HamaResponse;
 import com.example.chilipestdetection.models.LoginRequest;
 import com.example.chilipestdetection.models.LoginResponse;
+import com.example.chilipestdetection.models.PenangananResponse;
 import com.example.chilipestdetection.models.RegisterRequest;
 import com.example.chilipestdetection.models.RegisterResponse;
 
@@ -50,5 +51,41 @@ public interface ApiService {
     Call<HamaResponse> deleteHama(
             @Field("action") String action,
             @Field("kode_hama") String kodeHama
+    );
+
+    @FormUrlEncoded
+    @POST("exec")
+    Call<PenangananResponse> readPenanganan(
+            @Field("action") String action
+    );
+
+    @FormUrlEncoded
+    @POST("exec")
+    Call<PenangananResponse> createPenanganan(
+            @Field("action") String action,
+            @Field("tanaman") String tanaman,
+            @Field("hama") String hama,
+            @Field("gambar") String gambar,
+            @Field("gejala") String gejala,
+            @Field("aturan_fuzzy") String aturan_fuzzy
+    );
+
+    @FormUrlEncoded
+    @POST("exec")
+    Call<PenangananResponse> updatePenanganan(
+            @Field("action") String action,
+            @Field("kode_p_hama") String kode_p_hama,
+            @Field("tanaman") String tanaman,
+            @Field("hama") String hama,
+            @Field("gambar") String gambar,
+            @Field("gejala") String gejala,
+            @Field("aturan_fuzzy") String aturan_fuzzy
+    );
+
+    @FormUrlEncoded
+    @POST("exec")
+    Call<PenangananResponse> deletePenanganan(
+            @Field("action") String action,
+            @Field("kode_p_hama") String kode_p_hama
     );
 }
