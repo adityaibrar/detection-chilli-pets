@@ -12,15 +12,18 @@ import com.example.chilipestdetection.contracts.DrawerContract;
 import com.example.chilipestdetection.presenters.DrawerPresenter;
 
 // DrawerActivity.java
-public class DrawerActivity extends AppCompatActivity implements DrawerContract.View {
+public abstract class DrawerActivity extends AppCompatActivity implements DrawerContract.View {
 
+    protected  abstract  int getLayoutResourceId();
     private DrawerPresenter presenter;
     private TextView tvDeteksi, tvHama, tvAddHama, tvAddSolusi, tvLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drawer);
+//        setContentView(R.layout.activity_drawer);
+        setContentView(getLayoutResourceId());
+
 
         tvDeteksi = findViewById(R.id.tvDeteksi);
         tvHama = findViewById(R.id.tvHama);
