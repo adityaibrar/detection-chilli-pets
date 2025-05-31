@@ -55,17 +55,17 @@
             android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/tvAddHama"
+            android:id="@+id/tvPenanganan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tambah Hama"
+            android:text="Penanganan"
             android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/tvAddSolusi"
+            android:id="@+id/tvAnalisis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tambah Solusi"
+            android:text="Analisis"
             android:visibility="gone"/>
 
         <TextView

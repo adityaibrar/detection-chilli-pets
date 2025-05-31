@@ -6,8 +6,8 @@ public interface DrawerContract {
         void showAdminItems();
         void navigateToDeteksi();
         void navigateToHama();
-        void navigateToAddHama();
-        void navigateToAddSolusi();
+        void navigateToPenanganan();
+        void navigateToAnalisis();
         void logoutUser();
     }
 
@@ -16,7 +16,7 @@ public interface DrawerContract {
         void onLogoutClicked();
         void onDeteksiClicked();
         void onHamaClicked();
-        void onAddHamaClicked();
-        void onAddSolusiClicked();
+        void onAnalisisClicked();
+        void onPenangananClicked();
     }
 }

@@ -11,24 +11,22 @@ import com.example.chilipestdetection.R;
 import com.example.chilipestdetection.contracts.DrawerContract;
 import com.example.chilipestdetection.presenters.DrawerPresenter;
 
-// DrawerActivity.java
 public abstract class DrawerActivity extends AppCompatActivity implements DrawerContract.View {
 
     protected  abstract  int getLayoutResourceId();
     private DrawerPresenter presenter;
-    private TextView tvDeteksi, tvHama, tvAddHama, tvAddSolusi, tvLogout;
+    private TextView tvDeteksi, tvHama, tvPenanganan, tvAnalisis, tvLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_drawer);
         setContentView(getLayoutResourceId());
 
 
         tvDeteksi = findViewById(R.id.tvDeteksi);
         tvHama = findViewById(R.id.tvHama);
-        tvAddHama = findViewById(R.id.tvAddHama);
-        tvAddSolusi = findViewById(R.id.tvAddSolusi);
+        tvPenanganan = findViewById(R.id.tvPenanganan);
+        tvAnalisis = findViewById(R.id.tvAnalisis);
         tvLogout = findViewById(R.id.tvLogout);
 
         presenter = new DrawerPresenter(this, this);
@@ -39,44 +37,44 @@ public abstract class DrawerActivity extends AppCompatActivity implements Drawer
         // Set click listeners
         tvDeteksi.setOnClickListener(v -> presenter.onDeteksiClicked());
         tvHama.setOnClickListener(v -> presenter.onHamaClicked());
-        tvAddHama.setOnClickListener(v -> presenter.onAddHamaClicked());
-        tvAddSolusi.setOnClickListener(v -> presenter.onAddSolusiClicked());
+        tvPenanganan.setOnClickListener(v -> presenter.onPenangananClicked());
+        tvAnalisis.setOnClickListener(v -> presenter.onAnalisisClicked());
         tvLogout.setOnClickListener(v -> presenter.onLogoutClicked());
     }
 
     @Override
     public void showUserItems() {
         tvDeteksi.setVisibility(View.VISIBLE);
-        tvHama.setVisibility(View.VISIBLE);
-        tvAddHama.setVisibility(View.GONE);
-        tvAddSolusi.setVisibility(View.GONE);
+        tvHama.setVisibility(View.GONE);
+        tvPenanganan.setVisibility(View.GONE);
+        tvAnalisis.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showAdminItems() {
         tvDeteksi.setVisibility(View.GONE);
-        tvHama.setVisibility(View.GONE);
-        tvAddHama.setVisibility(View.VISIBLE);
-        tvAddSolusi.setVisibility(View.VISIBLE);
+        tvHama.setVisibility(View.VISIBLE);
+        tvPenanganan.setVisibility(View.VISIBLE);
+        tvAnalisis.setVisibility(View.GONE);
     }
 
     @Override
     public void navigateToDeteksi() {
-//        startActivity(new Intent(this, DeteksiActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override
     public void navigateToHama() {
-//        startActivity(new Intent(this, HamaActivity.class));
+        startActivity(new Intent(this, SecondaryActivity.class));
     }
 
     @Override
-    public void navigateToAddHama() {
-//        startActivity(new Intent(this, AddHamaActivity.class));
+    public void navigateToPenanganan() {
+        startActivity(new Intent(this, PenangananActivity.class));
     }
 
     @Override
-    public void navigateToAddSolusi() {
+    public void navigateToAnalisis() {
 //        startActivity(new Intent(this, AddSolusiActivity.class));
     }
 
