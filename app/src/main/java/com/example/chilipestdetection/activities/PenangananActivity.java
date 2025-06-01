@@ -3,6 +3,7 @@ package com.example.chilipestdetection.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -10,9 +11,12 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PenangananActivity extends AppCompatActivity implements PenangananContract.View {
+public class PenangananActivity extends DrawerActivity implements PenangananContract.View {
 
     private RecyclerView recyclerView;
     private PenangananAdapter adapter;
@@ -36,14 +40,19 @@ public class PenangananActivity extends AppCompatActivity implements PenangananC
     private List<PenangananData> penangananList;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_penanganan;
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_penanganan);
+//        setContentView(R.layout.activity_penanganan);
 
         initViews();
         setupRecyclerView();
         setupPresenter();
         setupListeners();
+        setUpToolbar();
 
         presenter.loadPenangananList();
     }
@@ -85,6 +94,17 @@ public class PenangananActivity extends AppCompatActivity implements PenangananC
                 presenter.deletePenanganan(penanganan);
             }
         });
+    }
+
+    private  void setUpToolbar(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu); // Pastikan Anda memiliki icon menu
+            getSupportActionBar().setTitle("Data Penangaan");
+        }
     }
 
     @Override
@@ -138,6 +158,17 @@ public class PenangananActivity extends AppCompatActivity implements PenangananC
                 .setPositiveButton("Ya", (dialog, which) -> presenter.confirmDelete(penanganan))
                 .setNegativeButton("Tidak", null)
                 .show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle toolbar home button click to open drawer
+        if (item.getItemId() == android.R.id.home) {
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.openDrawer(GravityCompat.START);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
