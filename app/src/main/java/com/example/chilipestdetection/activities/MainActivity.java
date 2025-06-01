@@ -3,11 +3,14 @@ package com.example.chilipestdetection.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,11 +20,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.chilipestdetection.R;
+import com.example.chilipestdetection.helpers.DatabaseHelper;
+import com.example.chilipestdetection.models.DetectionHistory;
+import com.example.chilipestdetection.presenters.DrawerPresenter;
 
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
@@ -35,7 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends DrawerActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 100;
     private static final int REQUEST_GALLERY_PERMISSION = 101;
@@ -56,13 +65,26 @@ public class MainActivity extends AppCompatActivity {
     private String currentPhotoPath;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
 
         initViews();
         initTensorFlowLite();
+        initPresenter();
         setupClickListeners();
+        setUpToolbar();
+    }
+
+    private void initPresenter() {
+        DrawerPresenter drawerPresenter = new DrawerPresenter(this, this);
+
+        drawerPresenter.checkUserType();
     }
 
     private void initViews() {
@@ -89,6 +111,17 @@ public class MainActivity extends AppCompatActivity {
     private void setupClickListeners() {
         btnUpload.setOnClickListener(v -> showImageSourceDialog());
         btnDetect.setOnClickListener(v -> detectPest());
+    }
+
+    private  void setUpToolbar(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu); // Pastikan Anda memiliki icon menu
+            getSupportActionBar().setTitle("Data Hama");
+        }
     }
 
     private void showImageSourceDialog() {
@@ -122,8 +155,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("image/*");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                        REQUEST_GALLERY_PERMISSION);
+                return;
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_GALLERY_PERMISSION);
+                return;
+            }
+        }
+
+        launchImagePicker();
+    }
+
+    private void launchImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
     }
 
@@ -148,24 +202,49 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_IMAGE_CAPTURE:
+                    // Handle camera result
                     selectedBitmap = BitmapFactory.decodeFile(currentPhotoPath);
                     displayImage();
                     break;
 
                 case REQUEST_IMAGE_GALLERY:
+                    // Handle gallery result
                     if (data != null && data.getData() != null) {
                         try {
                             Uri uri = data.getData();
-                            selectedBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+                            selectedBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                            currentPhotoPath = getRealPathFromURI(uri);
                             displayImage();
                         } catch (IOException e) {
-                            Toast.makeText(this, "Gagal membaca gambar dari galeri", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Gagal memuat gambar", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle toolbar home button click to open drawer
+        if (item.getItemId() == android.R.id.home) {
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.openDrawer(GravityCompat.START);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String path = cursor.getString(column_index);
+        cursor.close();
+        return path;
     }
 
     private void displayImage() {
@@ -247,12 +326,76 @@ public class MainActivity extends AppCompatActivity {
                 pestName, confidence, getPestDescription(pestName));
 
         builder.setMessage(message);
-        builder.setPositiveButton("OK", null);
+        builder.setPositiveButton("Simpan ke Riwayat", (dialog, which) -> {
+            // Check if we have a valid image path
+            if (currentPhotoPath == null || currentPhotoPath.isEmpty()) {
+                Toast.makeText(this, "Tidak dapat menyimpan: path gambar tidak valid", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            // Save to history
+            saveDetectionToHistory(pestName, confidence, currentPhotoPath);
+        });
         builder.setNegativeButton("Deteksi Ulang", (dialog, which) -> {
             tvResult.setText("Silakan pilih gambar baru untuk deteksi");
             tvConfidence.setText("");
         });
+        builder.setNeutralButton("Tutup", null);
         builder.show();
+    }
+    private void saveDetectionToHistory(String pestName, float confidence, String imagePath) {
+        try {
+            // Check if imagePath is null or empty
+            if (imagePath == null || imagePath.isEmpty()) {
+                Toast.makeText(this, "Tidak dapat menyimpan: path gambar tidak valid", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
+
+            // Get current date and time
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            String currentDate = sdf.format(new Date());
+
+            // Determine severity based on confidence and pest type
+            String severity = determineSeverity(pestName, confidence);
+
+            // Create detection history object
+            DetectionHistory history = new DetectionHistory(
+                    imagePath,
+                    currentDate,
+                    pestName,
+                    severity,
+                    confidence
+            );
+
+            // Save to database
+            long result = dbHelper.insertDetectionHistory(history);
+
+            if (result != -1) {
+                Toast.makeText(this, "Hasil deteksi disimpan ke riwayat", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Gagal menyimpan ke riwayat", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Gagal menyimpan ke riwayat: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String determineSeverity(String pestName, float confidence) {
+        // Determine severity based on pest type and confidence
+        if (pestName.toLowerCase().contains("healthy") || pestName.toLowerCase().contains("sehat")) {
+            return "Sehat";
+        }
+
+        if (confidence >= 80) {
+            return "Parah";
+        } else if (confidence >= 60) {
+            return "Sedang";
+        } else {
+            return "Ringan";
+        }
     }
 
     private String getPestDescription(String pestName) {
@@ -274,32 +417,6 @@ public class MainActivity extends AppCompatActivity {
                 return "Daun cabai dalam kondisi sehat. Lanjutkan perawatan rutin untuk menjaga kesehatan tanaman.";
             default:
                 return "Konsultasikan dengan ahli pertanian untuk penanganan yang tepat.";
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_GALLERY_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery();
-            } else {
-                Toast.makeText(this, "Izin akses galeri diperlukan", Toast.LENGTH_SHORT).show();
-            }
-        } else if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera();
-            } else {
-                Toast.makeText(this, "Izin kamera diperlukan", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (tflite != null) {
-            tflite.close();
         }
     }
 }

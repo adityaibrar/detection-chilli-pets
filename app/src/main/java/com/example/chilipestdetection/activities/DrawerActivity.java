@@ -75,7 +75,7 @@ public abstract class DrawerActivity extends AppCompatActivity implements Drawer
 
     @Override
     public void navigateToAnalisis() {
-//        startActivity(new Intent(this, AddSolusiActivity.class));
+        startActivity(new Intent(this, AnalysisActivity.class));
     }
 
     @Override
