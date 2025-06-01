@@ -1,16 +1,13 @@
 package com.example.chilipestdetection.services;
 
 import com.example.chilipestdetection.models.HamaResponse;
-import com.example.chilipestdetection.models.LoginRequest;
 import com.example.chilipestdetection.models.LoginResponse;
 import com.example.chilipestdetection.models.PenangananResponse;
-import com.example.chilipestdetection.models.RegisterRequest;
 import com.example.chilipestdetection.models.RegisterResponse;
 
 import java.util.Map;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
