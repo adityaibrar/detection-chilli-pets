@@ -97,8 +97,8 @@ public class SecondaryActivity extends DrawerActivity implements HamaView {
 
         adapter.setOnHamaActionListener(new HamaAdapter.OnHamaActionListener() {
             @Override
-            public void onEditHama(String kodeHama, String namaHama, String type) {
-                presenter.updateHama(kodeHama, namaHama, type);
+            public void onEditHama(String kodeHama, String namaHama, String type, String pengendalianRekomendasi, String pestisidaYangDisarankan, String catatanTambahan) {
+                presenter.updateHama(kodeHama, namaHama, type, pengendalianRekomendasi, pestisidaYangDisarankan, catatanTambahan);
             }
 
             @Override
@@ -122,6 +122,9 @@ public class SecondaryActivity extends DrawerActivity implements HamaView {
 
         EditText etNamaHama = dialogView.findViewById(R.id.etNamaHama);
         EditText etType = dialogView.findViewById(R.id.etType);
+        EditText etPengendalianRekomndasi = dialogView.findViewById(R.id.etPengedalian);
+        EditText etPestisida = dialogView.findViewById(R.id.etPestisida);
+        EditText etCatatan = dialogView.findViewById(R.id.etCatatan);
         Button btnSave = dialogView.findViewById(R.id.btnSave);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
@@ -131,9 +134,12 @@ public class SecondaryActivity extends DrawerActivity implements HamaView {
         btnSave.setOnClickListener(v -> {
             String namaHama = etNamaHama.getText().toString().trim();
             String type = etType.getText().toString().trim();
+            String pengendalian = etPengendalianRekomndasi.getText().toString().trim();
+            String pestisida = etPestisida.getText().toString().trim();
+            String catatan = etCatatan.getText().toString().trim();
 
             if (!namaHama.isEmpty() && !type.isEmpty()) {
-                presenter.createHama(namaHama, type);
+                presenter.createHama(namaHama, type, pengendalian, pestisida, catatan);
                 dialog.dismiss();
             } else {
                 Toast.makeText(this, "Mohon isi semua field", Toast.LENGTH_SHORT).show();
@@ -175,6 +181,9 @@ public class SecondaryActivity extends DrawerActivity implements HamaView {
             request.setKodeHama(item.getKodeHama());
             request.setNamaHama(item.getNamaHama());
             request.setType(item.getType());
+            request.setPengendalianRekomndasi(item.getPengendalianRekomndasi());
+            request.setPestisidaYangDisarankan(item.getPestisidaYangDisarankan());
+            request.setCatatanTambahan(item.getCatatanTambahan());
             requests.add(request);
         }
 

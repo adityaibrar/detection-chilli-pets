@@ -24,7 +24,7 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
     private OnHamaActionListener listener;
 
     public interface OnHamaActionListener {
-        void onEditHama(String kodeHama, String namaHama, String type);
+        void onEditHama(String kodeHama, String namaHama, String type, String pengendalianRekomendasi, String pestisidaYangDisarankan, String catatanTambahan);
         void onDeleteHama(String kodeHama);
     }
 
@@ -51,7 +51,9 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
         holder.tvKodeHama.setText(hama.getKodeHama());
         holder.tvNamaHama.setText(hama.getNamaHama());
         holder.tvType.setText(hama.getType());
-
+        holder.tvPengendalian.setText(hama.getPengendalianRekomndasi());
+        holder.tvPestisida.setText(hama.getPestisidaYangDisarankan());
+        holder.tvCatatan.setText(hama.getCatatanTambahan());
         holder.btnEdit.setOnClickListener(v -> showEditDialog(hama));
         holder.btnDelete.setOnClickListener(v -> showDeleteDialog(hama));
     }
@@ -79,11 +81,18 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
 
         EditText etNamaHama = dialogView.findViewById(R.id.etNamaHama);
         EditText etType = dialogView.findViewById(R.id.etType);
+        EditText etPengendalianRekomndasi = dialogView.findViewById(R.id.etPengedalian);
+        EditText etPestisida = dialogView.findViewById(R.id.etPestisida);
+        EditText etCatatan = dialogView.findViewById(R.id.etCatatan);
+
         Button btnSave = dialogView.findViewById(R.id.btnSave);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
         etNamaHama.setText(hama.getNamaHama());
         etType.setText(hama.getType());
+        etPengendalianRekomndasi.setText(hama.getPengendalianRekomndasi());
+        etPestisida.setText(hama.getPestisidaYangDisarankan());
+        etCatatan.setText(hama.getCatatanTambahan());
 
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
@@ -91,10 +100,13 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
         btnSave.setOnClickListener(v -> {
             String namaHama = etNamaHama.getText().toString().trim();
             String type = etType.getText().toString().trim();
+            String pengendalian = etPengendalianRekomndasi.getText().toString().trim();
+            String pestisida = etPestisida.getText().toString().trim();
+            String catatan = etCatatan.getText().toString().trim();
 
             if (!namaHama.isEmpty() && !type.isEmpty()) {
                 if (listener != null) {
-                    listener.onEditHama(hama.getKodeHama(), namaHama, type);
+                    listener.onEditHama(hama.getKodeHama(), namaHama, type, pengendalian, pestisida, catatan);
                 }
                 dialog.dismiss();
             }
@@ -120,7 +132,7 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
 
     public static class HamaViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        TextView tvKodeHama, tvNamaHama, tvType;
+        TextView tvKodeHama, tvNamaHama, tvType, tvPengendalian, tvPestisida, tvCatatan;
         Button btnEdit, btnDelete;
 
         public HamaViewHolder(@NonNull View itemView) {
@@ -128,6 +140,9 @@ public class HamaAdapter extends RecyclerView.Adapter<HamaAdapter.HamaViewHolder
             cardView = itemView.findViewById(R.id.cardView);
             tvKodeHama = itemView.findViewById(R.id.tvKodeHama);
             tvNamaHama = itemView.findViewById(R.id.tvNamaHama);
+            tvPengendalian = itemView.findViewById(R.id.tvPengendalian);
+            tvPestisida = itemView.findViewById(R.id.tvPestisida);
+            tvCatatan = itemView.findViewById(R.id.tvCatatan);
             tvType = itemView.findViewById(R.id.tvType);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
