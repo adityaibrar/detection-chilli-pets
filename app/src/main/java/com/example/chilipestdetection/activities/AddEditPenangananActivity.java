@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -62,8 +63,28 @@ public class AddEditPenangananActivity extends AppCompatActivity implements Pena
         setupPresenter();
         checkEditMode();
         setupListeners();
+        setUpToolBar();
 
         presenter.loadHamaList();
+    }
+
+    private void setUpToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24);
+
+            // Ganti judul sesuai mode edit/tambah
+            if (isEditMode) {
+                getSupportActionBar().setTitle("Edit Data Penanganan");
+            } else {
+                getSupportActionBar().setTitle("Tambah Data Penanganan");
+            }
+        }
+
+        // Listener untuk klik ikon back
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     private void initViews() {

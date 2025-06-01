@@ -43,6 +43,33 @@
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/tvPengendalian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="pengendalian"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvPestisida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Pestisida"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvCatatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="catatan"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

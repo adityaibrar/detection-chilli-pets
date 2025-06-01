@@ -34,7 +34,10 @@ public interface ApiService {
     Call<HamaResponse> createHama(
             @Field("action") String action,
             @Field("nama_hama") String namaHama,
-            @Field("type") String type
+            @Field("type") String type,
+            @Field("pengendalian_rekomndasi") String pengendalianRekomndasi,
+            @Field("pestisida_yang_disarankan") String pestisidaYangDisarankan,
+            @Field("catatan_tambahan") String catatanTambahan
     );
 
     @FormUrlEncoded
@@ -43,7 +46,10 @@ public interface ApiService {
             @Field("action") String action,
             @Field("kode_hama") String kodeHama,
             @Field("nama_hama") String namaHama,
-            @Field("type") String type
+            @Field("type") String type,
+            @Field("pengendalian_rekomndasi") String pengendalianRekomndasi,
+            @Field("pestisida_yang_disarankan") String pestisidaYangDisarankan,
+            @Field("catatan_tambahan") String catatanTambahan
     );
 
     @FormUrlEncoded

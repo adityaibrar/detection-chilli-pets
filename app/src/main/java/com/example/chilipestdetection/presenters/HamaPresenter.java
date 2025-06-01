@@ -2,6 +2,8 @@ package com.example.chilipestdetection.presenters;
 
 
 
+import android.util.Log;
+
 import com.example.chilipestdetection.contracts.HamaView;
 import com.example.chilipestdetection.models.HamaResponse;
 import com.example.chilipestdetection.services.ApiClient;
@@ -34,7 +36,6 @@ public class HamaPresenter {
                         HamaResponse HamaResponse = response.body();
                         if (HamaResponse.isSuccess()) {
                             view.showHamaList(HamaResponse.getData());
-
                         } else {
                             view.showError("Gagal memuat data hama");
                         }
@@ -54,12 +55,12 @@ public class HamaPresenter {
         });
     }
 
-    public void createHama(String namaHama, String type) {
+    public void createHama(String namaHama, String type, String pengendalianRekomndasi, String pestisidaYangDisarankan, String catatanTambahan) {
         if (view != null) {
             view.showLoading();
         }
 
-        Call<HamaResponse> call = ApiClient.getApiService().createHama("create_hama", namaHama, type);
+        Call<HamaResponse> call = ApiClient.getApiService().createHama("create_hama", namaHama, type, pengendalianRekomndasi, pestisidaYangDisarankan, catatanTambahan);
         call.enqueue(new Callback<HamaResponse>() {
             @Override
             public void onResponse(Call<HamaResponse> call, Response<HamaResponse> response) {
@@ -90,12 +91,12 @@ public class HamaPresenter {
         });
     }
 
-    public void updateHama(String kodeHama, String namaHama, String type) {
+    public void updateHama(String kodeHama, String namaHama, String type,String pengendalianRekomndasi, String pestisidaYangDisarankan, String catatanTambahan) {
         if (view != null) {
             view.showLoading();
         }
 
-        Call<HamaResponse> call = ApiClient.getApiService().updateHama("update_hama", kodeHama, namaHama, type);
+        Call<HamaResponse> call = ApiClient.getApiService().updateHama("update_hama", kodeHama, namaHama, type, pengendalianRekomndasi, pestisidaYangDisarankan, catatanTambahan);
         call.enqueue(new Callback<HamaResponse>() {
             @Override
             public void onResponse(Call<HamaResponse> call, Response<HamaResponse> response) {
