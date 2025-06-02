@@ -3,6 +3,7 @@ package com.example.chilipestdetection.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,7 @@ public abstract class DrawerActivity extends AppCompatActivity implements Drawer
 
     protected  abstract  int getLayoutResourceId();
     private DrawerPresenter presenter;
-    private TextView tvDeteksi, tvHama, tvPenanganan, tvAnalisis, tvLogout;
+    private LinearLayout tvDeteksi, tvHama, tvPenanganan, tvAnalisis, tvLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +24,11 @@ public abstract class DrawerActivity extends AppCompatActivity implements Drawer
         setContentView(getLayoutResourceId());
 
 
-        tvDeteksi = findViewById(R.id.tvDeteksi);
-        tvHama = findViewById(R.id.tvHama);
-        tvPenanganan = findViewById(R.id.tvPenanganan);
-        tvAnalisis = findViewById(R.id.tvAnalisis);
-        tvLogout = findViewById(R.id.tvLogout);
+        tvDeteksi = findViewById(R.id.menuDeteksi);
+        tvHama = findViewById(R.id.menuHama);
+        tvPenanganan = findViewById(R.id.menuPenanganan);
+        tvAnalisis = findViewById(R.id.menuAnalisis);
+        tvLogout = findViewById(R.id.menuLogout);
 
         presenter = new DrawerPresenter(this, this);
 
