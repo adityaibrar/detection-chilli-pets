@@ -99,7 +99,7 @@ public class MainActivity extends DrawerActivity {
 
     private void initTensorFlowLite() {
         try {
-            tflite = new Interpreter(FileUtil.loadMappedFile(this, "mobilent_compatible3.tflite"));
+            tflite = new Interpreter(FileUtil.loadMappedFile(this, "mobilent_compatible4.tflite"));
             labelList = FileUtil.loadLabels(this, "coco_labels.txt");
             Toast.makeText(this, "Model berhasil dimuat", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {

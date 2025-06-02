@@ -68,39 +68,226 @@
         android:elevation="8dp"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvDeteksi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Deteksi"
-            android:visibility="gone"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical"
+            android:background="?attr/colorPrimary"
+            android:gravity="center_vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvHama"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hama"
-            android:visibility="gone"/>
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_agriculture"
+                android:background="?attr/colorPrimary"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/tvPenanganan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Penanganan"
-            android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pest Detection App"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/tvAnalisis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Analisis"
-            android:visibility="gone"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvLogout"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp">
+
+                <!-- Menu Deteksi -->
+                <LinearLayout
+                    android:id="@+id/menuDeteksi"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_camera"
+                        android:layout_marginEnd="24dp"
+                        android:contentDescription="Deteksi Icon"/>
+
+                    <TextView
+                        android:id="@+id/tvDeteksi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Deteksi"
+                        android:textSize="16sp"
+                        android:textColor="#333333"/>
+
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginStart="64dp"/>
+
+                <!-- Menu Hama -->
+                <LinearLayout
+                    android:id="@+id/menuHama"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_bug"
+                        android:layout_marginEnd="24dp"
+                        android:contentDescription="Hama Icon"/>
+
+                    <TextView
+                        android:id="@+id/tvHama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hama"
+                        android:textSize="16sp"
+                        android:textColor="#333333"/>
+
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginStart="64dp"/>
+
+                <!-- Menu Penanganan -->
+                <LinearLayout
+                    android:id="@+id/menuPenanganan"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_medical"
+                        android:layout_marginEnd="24dp"
+                        android:contentDescription="Penanganan Icon"/>
+
+                    <TextView
+                        android:id="@+id/tvPenanganan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Penanganan"
+                        android:textSize="16sp"
+                        android:textColor="#333333"/>
+
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginStart="64dp"/>
+
+                <!-- Menu Analisis -->
+                <LinearLayout
+                    android:id="@+id/menuAnalisis"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_analytics"
+                        android:layout_marginEnd="24dp"
+                        android:contentDescription="Analisis Icon"/>
+
+                    <TextView
+                        android:id="@+id/tvAnalisis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Analisis"
+                        android:textSize="16sp"
+                        android:textColor="#333333"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <!-- Footer dengan Logout -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logout"/>
+            android:orientation="vertical">
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"/>
+
+            <!-- Menu Logout -->
+            <LinearLayout
+                android:id="@+id/menuLogout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_logout"
+                    android:layout_marginEnd="24dp"
+                    android:contentDescription="Logout Icon"/>
+
+                <TextView
+                    android:id="@+id/tvLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    android:textSize="16sp"
+                    android:textColor="#F44336"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
