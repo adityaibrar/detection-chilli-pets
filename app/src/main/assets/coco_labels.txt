@@ -1,4 +1,2 @@
-kutu daun
-lalat_buah
-thripv
-tungau
+background
+daun_cabai

@@ -16,10 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -99,7 +97,7 @@ public class MainActivity extends DrawerActivity {
 
     private void initTensorFlowLite() {
         try {
-            tflite = new Interpreter(FileUtil.loadMappedFile(this, "mobilent_compatible4.tflite"));
+            tflite = new Interpreter(FileUtil.loadMappedFile(this, "leaf_model.tflite"));
             labelList = FileUtil.loadLabels(this, "coco_labels.txt");
             Toast.makeText(this, "Model berhasil dimuat", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
