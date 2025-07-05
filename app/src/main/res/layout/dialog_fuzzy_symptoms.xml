@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Gejala Kutu Daun -->
+        <TextView android:text="Gejala Kutu Daun" android:textStyle="bold" android:layout_marginBottom="8dp" android:layout_height="40dp" android:layout_width="match_parent"/>
+        <CheckBox android:id="@+id/cb_daun_melingkar" android:text="Daun Melingkar" android:layout_height="40dp" android:layout_width="match_parent"/>
+        <CheckBox android:id="@+id/cb_daun_keriput" android:text="Daun Keriput" android:layout_height="40dp" android:layout_width="match_parent"/>
+
+        <!-- Gejala Lalat Buah -->
+        <TextView android:text="Gejala Lalat Buah" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="8dp" android:layout_height="40dp" android:layout_width="match_parent"/>
+        <CheckBox android:id="@+id/cb_bercak_buah_hitam" android:text="Bercak Hitam pada Buah" android:layout_height="40dp" android:layout_width="match_parent"/>
+        <CheckBox android:id="@+id/cb_buah_busuk" android:text="Buah Busuk" android:layout_height="40dp" android:layout_width="match_parent"/>
+
+        <!-- Gejala Tungau -->
+        <TextView android:text="Gejala Tungau" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="8dp" android:layout_height="40dp" android:layout_width="match_parent"/>
+        <CheckBox android:id="@+id/cb_daun_melengkung" android:text="Daun Melengkung" android:layout_height="40dp" android:layout_width="match_parent"/>
+        <CheckBox android:id="@+id/cb_daun_mengerut" android:text="Daun Mengerut" android:layout_height="40dp" android:layout_width="match_parent"/>
+
+        <!-- Gejala Thrips -->
+        <TextView android:text="Gejala Thrips" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="8dp" android:layout_height="40dp" android:layout_width="match_parent"/>
+        <CheckBox android:id="@+id/cb_daun_keriting" android:text="Daun Keriting" android:layout_height="40dp" android:layout_width="match_parent"/>
+        <CheckBox android:id="@+id/cb_daun_kuning" android:text="Daun Kuning" android:layout_height="40dp" android:layout_width="match_parent"/>
+
+    </LinearLayout>
+</ScrollView>
